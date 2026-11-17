@@ -1,0 +1,83 @@
+CoreSight-style Memory Tracker - log file
+================================================
+
+2026-11-17 12:23:00  [STATS] init: platform=linux interval=20s record=3s ring=16384 detectors=6
+2026-11-17 12:23:00  [STATS] scheduler thread started: interval=20s record=3s ring=16384 slots
+2026-11-17 12:23:00 [cycle #1] [SCAN_BEGIN] recording window OPEN (3 s)
+2026-11-17 12:23:00 [cycle #1] [SCAN_BEGIN] === self test: 8 cases ===
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case1: normal 1 KiB block of 0x41 @ 0x6530ba997850
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case2: 2 KiB of random bytes @ 0x6530ba999590 (expect HIGH_ENTROPY)
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case3: 512-byte NOP sled @ 0x6530ba998460 (expect NOP_SLED)
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case4: RWX page @ 0x76abb2372000 (expect RWX alert)
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case5: control-byte block @ 0x6530ba999da0 (expect LOW_PRINTABLE)
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case6: patched victim_function[0..4] = E9 00 00 00 00 (original F3 0F 1E FA 8B), expect HOOK alert
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case7: short-lived 64-byte block @ 0x6530ba999eb0
+2026-11-17 12:23:00 [cycle #1] [ALLOC] case8: page flipped RW -> RX @ 0x76abb2371000 (expect PERM_CHANGE)
+2026-11-17 12:23:00 [cycle #1] [SCAN_END] === self test: all 8 cases staged ===
+2026-11-17 12:23:03 [cycle #1] [SCAN_END] recording window CLOSED (3.003 s elapsed)
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x00006530ba997850 size=1024 perms=0x3 stack=0x63b1ea8e3f676ea6 ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x00006530ba999590 size=2048 perms=0x3 stack=0xfc05e7e6a6422f73 ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x00006530ba998460 size=512 perms=0x3 stack=0xbd96b6aa4bb8f559 ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x000076abb2372000 size=4096 perms=0x7 stack=0x55c82765238c087e ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [RWX] RWX region allocated @ 0x000076abb2372000 size=4096 perms=0x7 stack=0x55c82765238c087e
+2026-11-17 12:23:03 [cycle #1] [RWX] first 32 byte(s) of the RWX region:
+    00000000: 58 C3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | X...............
+    00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 | ................
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x00006530ba999da0 size=256 perms=0x3 stack=0xf843a9414aa688ba ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x00006530ba999eb0 size=64 perms=0x3 stack=0x70ea3f9b91e28cfa ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [FREE] addr=0x00006530ba999eb0 size=64 perms=0x0 stack=0x70ea3f9b91e28cfa ip=0x0000653086bcc393
+2026-11-17 12:23:03 [cycle #1] [ALLOC] addr=0x000076abb2371000 size=4096 perms=0x3 stack=0x91a2d0786a259757 ip=0x0000653086bd04ff
+2026-11-17 12:23:03 [cycle #1] [PERM_CHANGE] permissions changed @ 0x000076abb2371000: 0x3 -> 0x5 (rw- -> r-x)
+2026-11-17 12:23:03 [cycle #1] [PERM_CHANGE] 1 permission transition(s) observed this cycle
+2026-11-17 12:23:03 [cycle #1] [HIGH_ENTROPY] entropy 7.92 > 7.50 @ 0x00006530ba999590 size=2048 (possibly encrypted/encoded payload)
+2026-11-17 12:23:03 [cycle #1] [NOP_SLED] NOP sled of 512 byte(s) @ 0x00006530ba998460 (landing pad for shellcode)
+2026-11-17 12:23:03 [cycle #1] [LOW_PRINTABLE] only 0.0% printable bytes @ 0x00006530ba999da0 (machine code / binary blob)
+2026-11-17 12:23:03 [cycle #1] [STATS] content scan: new high-entropy=1 nop-sled=1 int3-sled=0 low-printable=1
+2026-11-17 12:23:03 [cycle #1] [HOOK] *** inline hook: victim_function -> JMP rel32 (E9) @ 0x653086bd02b0 ***
+2026-11-17 12:23:03 [cycle #1] [HOOK]     target = 0x0000653086bd02b5  module = /home/antiphase-047/opencode-p/memory-tracker/build/tracker_linux
+2026-11-17 12:23:03 [cycle #1] [HOOK]     prologue: E9 00 00 00 00 0D E6 71 00 00 89 F8 31 D2 66 90
+2026-11-17 12:23:03 [cycle #1] [HOOK] mmap: clean (F3 0F 1E FA 41) @ 0x76abb1925580
+2026-11-17 12:23:03 [cycle #1] [HOOK] mprotect: clean (F3 0F 1E FA B8) @ 0x76abb1925ea0
+2026-11-17 12:23:03 [cycle #1] [HOOK] malloc: clean (F3 0F 1E FA 55) @ 0x76abb18ad730
+2026-11-17 12:23:03 [cycle #1] [HOOK] free: clean (F3 0F 1E FA 48) @ 0x76abb18ade10
+2026-11-17 12:23:03 [cycle #1] [HOOK] open: clean (F3 0F 1E FA 55) @ 0x76abb191b3b0
+2026-11-17 12:23:03 [cycle #1] [HOOK] read: clean (F3 0F 1E FA 80) @ 0x76abb191bce0
+2026-11-17 12:23:03 [cycle #1] [HOOK] write: clean (F3 0F 1E FA 80) @ 0x76abb191c7f0
+2026-11-17 12:23:03 [cycle #1] [HOOK] execve: clean (F3 0F 1E FA B8) @ 0x76abb18eeff0
+2026-11-17 12:23:03 [cycle #1] [HOOK] execv: clean (F3 0F 1E FA 48) @ 0x76abb18eefd0
+2026-11-17 12:23:03 [cycle #1] [HOOK] ptrace: clean (F3 0F 1E FA 55) @ 0x76abb1926330
+2026-11-17 12:23:03 [cycle #1] [HOOK] dlopen: clean (F3 0F 1E FA 55) @ 0x76abb18982b0
+2026-11-17 12:23:03 [cycle #1] [HOOK] system: clean (F3 0F 1E FA 48) @ 0x76abb1858750
+2026-11-17 12:23:03 [cycle #1] [HOOK] popen: clean (F3 0F 1E FA 55) @ 0x76abb1887990
+2026-11-17 12:23:03 [cycle #1] [HOOK] hook scan: watched=14 inline-hooks=1 redirected=0 unreadable=0
+2026-11-17 12:23:03 [cycle #1] [ROP] gadget: pop rax; ret @ 0x000076abb2372000 (score=2)
+2026-11-17 12:23:03 [cycle #1] [ROP] gadget: pop rdi; ret @ 0x000076abb2372064 (score=2)
+2026-11-17 12:23:03 [cycle #1] [ROP] 2 gadget(s) in executable block @ 0x000076abb2372000 size=4096 first="pop rax; ret"
+2026-11-17 12:23:03 [cycle #1] [STATS] ROP scan: executable blocks=2 flagged=1
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] ret2libc: runtime module @ 0x000076abb1800000 size=2174352
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] system @ 0x000076abb1858750 (libc.so.6+0x58750)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] execve @ 0x000076abb18eeff0 (libc.so.6+0xeeff0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] execv @ 0x000076abb18eefd0 (libc.so.6+0xeefd0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] execvp @ 0x000076abb18ef060 (libc.so.6+0xef060)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] execl @ 0x000076abb18ee990 (libc.so.6+0xee990)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] popen @ 0x000076abb1887990 (libc.so.6+0x87990)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] mprotect @ 0x000076abb1925ea0 (libc.so.6+0x125ea0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] mmap @ 0x000076abb1925580 (libc.so.6+0x125580)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] dlopen @ 0x000076abb18982b0 (libc.so.6+0x982b0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] dlsym @ 0x000076abb1898380 (libc.so.6+0x98380)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] setuid @ 0x000076abb190eb80 (libc.so.6+0x10eb80)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] seteuid @ 0x000076abb19270f0 (libc.so.6+0x1270f0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] setgid @ 0x000076abb190e8f0 (libc.so.6+0x10e8f0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] setresuid @ 0x000076abb190eac0 (libc.so.6+0x10eac0)
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] "/bin/sh" string @ 0x000076abb19cc42f (runtime+0x1cc42f) - the classic ret2libc argument
+2026-11-17 12:23:03 [cycle #1] [RET2LIBC] ret2libc surface mapped: 15 dangerous symbol(s), "/bin/sh" FOUND, hooks checked=4, outside-runtime=0
+2026-11-17 12:23:03 [cycle #1] [STATS] cycle summary: drained=8 (in-window=8, out-of-window=0) still-buffered=0 ring-dropped=0 blocks=6
+2026-11-17 12:23:03 [cycle #1] [STATS] reached 1 completed cycle(s)
+2026-11-17 12:23:03 [cycle #1] [STATS] scheduler thread stopped
+2026-11-17 12:23:03 [cycle #1] [STATS] ---- final summary ----
+2026-11-17 12:23:03 [cycle #1] [STATS] 0x00006530ba999590 size=2048 perms=0x3 entropy=7.92 hits=[HIGH_ENTROPY] tag="HIGH_ENTROPY" stack=0xfc05e7e6a6422f73
+2026-11-17 12:23:03 [cycle #1] [STATS] 0x000076abb2371000 size=4096 perms=0x5 entropy=0.00 hits=[PERM_CHANGE] tag="PERM_CHANGE" stack=0x91a2d0786a259757
+2026-11-17 12:23:03 [cycle #1] [STATS] 0x00006530ba998460 size=512 perms=0x3 entropy=0.00 hits=[NOP_SLED] tag="NOP_SLED" stack=0xbd96b6aa4bb8f559
+2026-11-17 12:23:03 [cycle #1] [STATS] 0x00006530ba999da0 size=256 perms=0x3 entropy=4.95 hits=[LOW_PRINTABLE] tag="LOW_PRINTABLE" stack=0xf843a9414aa688ba
+2026-11-17 12:23:03 [cycle #1] [STATS] 0x000076abb2372000 size=4096 perms=0x7 entropy=0.01 hits=[RWX,ROP] tag="RWX,ROP" stack=0x55c82765238c087e
+2026-11-17 12:23:03 [cycle #1] [STATS] blocks tracked=6 suspicious=5 ring: produced=8 dropped=0 consumed-events-last-cycle see log above

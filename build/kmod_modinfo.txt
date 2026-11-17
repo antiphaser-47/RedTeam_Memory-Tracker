@@ -1,0 +1,16 @@
+filename:       /home/antiphase-047/opencode-p/memory-tracker/build/memory_tracker.ko
+version:        1.0
+description:    CoreSight-inspired real-time memory tracker: kprobe/kretprobe tracing of kmalloc/kfree with double-free, wrong-free and cache-mismatch detection, exported through debugfs
+author:         memory-tracker project
+license:        GPL
+srcversion:     CF9BAE88C2C5E013AD42151
+depends:        
+name:           memory_tracker
+retpoline:      Y
+vermagic:       7.0.0-43-generic SMP preempt mod_unload modversions 
+parm:           ring_size:Trace ring slots per CPU (rounded up to a power of two) (uint)
+parm:           kblock_bits:log2 of live-block table slots, clamped 10..22 (uint)
+parm:           oversize_kb:Alert on allocations >= this many KiB (0 = disabled) (uint)
+parm:           trace_alloc:Emit a trace event for every allocation (bool)
+parm:           trace_free:Emit a trace event for every clean release (bool)
+parm:           trace_unknown:Emit a trace event for releases of unknown pointers (bool)

@@ -1,0 +1,29 @@
+================================================================
+ memory_tracker.ko test report
+ date        : 2026-11-17 15:24:55 UTC
+ kernel      : 7.0.0-43-generic
+ module      : build/memory_tracker.ko
+ root        : no
+ result      : PASS=15 FAIL=0 SKIP=1
+================================================================
+
+  PASS | ko is an ELF 64-bit relocatable object
+  PASS | modinfo license=GPL
+  PASS | modinfo name=memory_tracker
+  PASS | modinfo description mentions the memory tracker
+  PASS | depends on register_kretprobe
+  PASS | depends on register_kprobe
+  PASS | depends on unregister_kretprobe
+  PASS | announces the debugfs path at load time
+  PASS | log messages are prefixed with the module name
+  PASS | exposes the ring_size parameter
+  PASS | exposes the kblock_bits parameter
+  PASS | exposes the oversize_kb parameter
+  PASS | exposes the trace_alloc parameter
+  PASS | imports debugfs_create_dir
+  PASS | imports sprint_symbol (GPL)
+  SKIP | module load test (requires root: sudo make kmod-test)
+
+----------------------------------------------------------------
+ OVERALL: PASS
+================================================================

@@ -1,0 +1,19 @@
+================================================================
+ libtracker_preload.so functional test report
+ date        : 2026-11-17 15:22:45 UTC
+ shim        : build/libtracker_preload.so
+ output      : build/shim_victim_out.txt
+ result      : PASS=7 FAIL=0
+================================================================
+
+  PASS | shim announced itself at startup
+  PASS | overflow reported with the exact offset (0) and the written byte
+  PASS | double free reported with the block size
+  PASS | victim ran to completion (the shim does not crash the target)
+  PASS | exactly one overflow alert (= 1)
+  PASS | exactly one double-free alert (= 1)
+  PASS | clean 32-byte allocation produced no alert
+
+----------------------------------------------------------------
+ OVERALL: PASS
+================================================================

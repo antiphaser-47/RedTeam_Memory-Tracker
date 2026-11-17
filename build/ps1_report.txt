@@ -1,0 +1,59 @@
+================================================================
+ tracker.exe functional test report
+ date        : 2026-11-17 08:33:38 UTC
+ binary      : build/tracker_linux
+ log         : build/ps1_check.log
+ result      : PASS=46 FAIL=0
+================================================================
+
+  PASS | recording window opened for 3 seconds
+  PASS | recording window closed with elapsed time
+  PASS | cycle summary reports drained in-window events
+  PASS | ring buffer drop counter reported
+  PASS | scheduler thread started
+  PASS | scheduler thread stopped cleanly
+  PASS | one full cycle completed
+  PASS | final summary section present
+  PASS | case1 staged (benign baseline)
+  PASS | case2 staged (encrypted payload stand-in)
+  PASS | case3 staged (NOP sled)
+  PASS | case4 staged (RWX region)
+  PASS | case5 staged (non-printable blob)
+  PASS | case6 staged (inline hook)
+  PASS | case7 staged (alloc+free)
+  PASS | case8 staged (permission transition)
+  PASS | case9 staged (double free)
+  PASS | case10 staged (use-after-free)
+  PASS | case11 staged (redzone overflow)
+  PASS | RWX: alert on RWX allocation
+  PASS | RWX: payload bytes dumped
+  PASS | RWX: gadget bytes visible in dump
+  PASS | entropy: high-entropy block flagged
+  PASS | NOP sled: 512-byte run detected
+  PASS | printable: control-byte block flagged
+  PASS | perm change: RW -> RX transition detected
+  PASS | hook: real inline patch detected
+  PASS | hook: jump target resolved to a module
+  PASS | free: released block recorded
+  PASS | hook: watch list seeded with defaults + victim
+  PASS | ROP: Capstone verified 'pop rax; ret' gadget
+  PASS | ROP: Capstone verified 'pop rdi; ret' gadget
+  PASS | ROP: block-level gadget summary
+  PASS | ret2libc: system() address resolved
+  PASS | ret2libc: core runtime module located
+  SKIP | ret2libc: cmd.exe string located in the runtime module (not present on this platform)
+  PASS | ret2libc: surface summary produced
+  PASS | heap: double free detected with the interval between releases
+  PASS | heap: use-after-free write detected with exact offset
+  PASS | heap: redzone canary overrun detected
+  PASS | heap: per-cycle summary produced
+  PASS | heap: cumulative counters produced
+  PASS | no false positive on the benign 1 KiB block
+  PASS | blocks tracked after self test (= 7)
+  PASS | suspicious blocks (benign block excluded) (= 6)
+  PASS | no ring buffer events dropped (= 0)
+  PASS | no zero-fill artifact gadgets reported (= 0)
+
+----------------------------------------------------------------
+ OVERALL: PASS
+================================================================

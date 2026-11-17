@@ -1,0 +1,5 @@
+2026-11-17 23:22:45  [STATS] LD_PRELOAD heap guard active: table=65536 slots, redzone=16 bytes, log=(console only)
+2026-11-17 23:22:45  [OVERFLOW] *** redzone overrun (LD_PRELOAD shim): block 0x0000599bb4849660 size=16 offset=0 expected=0xF0 got=0x58 (buffer overflow past the end of the block) ***
+2026-11-17 23:22:45  [DOUBLE_FREE] *** double free (LD_PRELOAD shim): 0x0000599bb48496b0 was already freed, block size=16 ***
+victim done
+2026-11-17 23:22:45  [STATS] LD_PRELOAD heap guard stopped
